@@ -57,26 +57,55 @@ section{padding:68px 5%;}
 #collection{background:var(--cream2);}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:22px;margin-top:40px;}
 
+/* ===== CARD ===== */
 .card{background:var(--white);border-radius:15px;overflow:hidden;box-shadow:0 2px 14px rgba(14,12,9,.06);cursor:pointer;transition:transform .2s,box-shadow .2s;position:relative;}
 .card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(14,12,9,.11);}
-.card.sold .card-img-wrap::after{content:'SOLD OUT';position:absolute;inset:0;background:rgba(14,12,9,.58);display:flex;align-items:center;justify-content:center;color:white;font-size:1.05rem;font-weight:700;letter-spacing:.12em;z-index:2;}
 
-.card-img-wrap{position:relative;width:100%;height:290px;background:#ede7da;overflow:hidden;}
-.slider{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1);}
-.slide{min-width:100%;height:100%;flex-shrink:0;}
-.slide img{width:100%;height:100%;object-fit:cover;}
+/* SOLD overlay */
+.card.sold .sold-overlay{display:flex;}
+.sold-overlay{display:none;position:absolute;inset:0;background:rgba(14,12,9,.55);align-items:center;justify-content:center;z-index:10;pointer-events:none;}
+.sold-overlay span{color:white;font-size:1.05rem;font-weight:700;letter-spacing:.12em;border:2px solid white;padding:6px 18px;border-radius:4px;}
+
+/* ===== CARD IMAGE SLIDER ===== */
+.card-img-wrap{position:relative;width:100%;height:360px;background:#ede7da;overflow:hidden;}
+
+/* The track that moves */
+.slider-track{display:flex;height:100%;width:100%;transition:transform .38s cubic-bezier(.4,0,.2,1);will-change:transform;}
+
+/* Each slide fills full width */
+.slide{flex:0 0 100%;width:100%;height:100%;position:relative;overflow:hidden;}
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top; /* show face first */
+  display:block;
+}
 .slide-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:rgba(107,100,89,.3);background:#ede7da;}
 .slide-ph svg{width:40px;height:40px;}
 .slide-ph span{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;}
-.s-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:3;}
-.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);transition:all .2s;cursor:pointer;}
-.dot.active{background:white;transform:scale(1.25);}
-.s-prev,.s-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(14,12,9,.45);border:none;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;font-size:.9rem;opacity:0;transition:opacity .2s;}
+
+/* Dots */
+.s-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:5;}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.5);transition:all .2s;cursor:pointer;border:none;padding:0;}
+.dot.active{background:white;transform:scale(1.3);}
+
+/* Prev/Next arrows */
+.s-prev,.s-next{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(14,12,9,.5);border:none;color:white;
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:5;font-size:1rem;
+  opacity:0;transition:opacity .2s;
+}
 .card:hover .s-prev,.card:hover .s-next{opacity:1;}
-.s-prev{left:8px;}.s-next{right:8px;}
-.card-wa-h{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(14,12,9,.82),transparent);padding:18px 12px 12px;opacity:0;transition:opacity .2s;z-index:3;}
+.s-prev{left:8px;} .s-next{right:8px;}
+
+/* WhatsApp hover bar */
+.card-wa-h{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(14,12,9,.85),transparent);padding:20px 12px 12px;opacity:0;transition:opacity .2s;z-index:4;}
 .card:hover:not(.sold) .card-wa-h{opacity:1;}
-.wa-sm{width:100%;background:#25D366;color:white;border:none;padding:8px;border-radius:8px;font-size:.76rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;}
+.wa-sm{width:100%;background:#25D366;color:white;border:none;padding:9px;border-radius:8px;font-size:.76rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;}
 
 .colour-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
 .cdot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(14,12,9,.1);flex-shrink:0;}
@@ -91,6 +120,7 @@ section{padding:68px 5%;}
 .wa-tag{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.26);color:#1a9a4a;font-size:.64rem;font-weight:600;padding:4px 11px;border-radius:50px;}
 .sold-tag{background:rgba(180,40,40,.09);border:1px solid rgba(180,40,40,.2);color:#b02020;font-size:.64rem;font-weight:600;padding:4px 11px;border-radius:50px;}
 
+/* ===== WA SECTION ===== */
 .wa-sec{background:linear-gradient(135deg,#075E54,#128C7E);padding:60px 5%;text-align:center;}
 .wa-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:44px 32px;max-width:580px;margin:0 auto;}
 .wa-icon{font-size:3rem;margin-bottom:16px;}
@@ -99,7 +129,7 @@ section{padding:68px 5%;}
 .wa-open{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:white;padding:13px 34px;border-radius:50px;font-size:.86rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;}
 .wa-open:hover{background:#1ebe58;}
 
-/* OWNER */
+/* ===== OWNER ===== */
 .owner-panel{background:var(--dark);padding:60px 5%;}
 .owner-panel .sec-title{color:var(--cream);}
 .owner-panel .sec-sub{color:rgba(245,240,232,.38);}
@@ -135,8 +165,8 @@ section{padding:68px 5%;}
 
 .owner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:24px;}
 .o-card{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.13);border-radius:12px;overflow:hidden;}
-.o-card-img{height:150px;background:#1a1713;position:relative;display:flex;align-items:center;justify-content:center;}
-.o-card-img img{width:100%;height:100%;object-fit:cover;}
+.o-card-img{height:150px;background:#1a1713;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.o-card-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}
 .o-card-img .no-img{color:rgba(201,168,76,.2);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;}
 .o-card-body{padding:11px 13px 13px;}
 .o-card-name{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);margin-bottom:8px;}
@@ -145,7 +175,7 @@ section{padding:68px 5%;}
 .btn-unsold-o{background:#1a9a4a;color:white;border:none;padding:5px 11px;border-radius:7px;font-size:.67rem;font-weight:600;cursor:pointer;}
 .btn-del-o{background:rgba(255,255,255,.05);color:rgba(245,240,232,.4);border:1px solid rgba(255,255,255,.09);padding:5px 11px;border-radius:7px;font-size:.67rem;cursor:pointer;}
 
-/* MODAL */
+/* ===== MODALS ===== */
 .overlay{position:fixed;inset:0;z-index:500;background:rgba(14,12,9,.72);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
 .overlay.open{opacity:1;pointer-events:all;}
 .modal{background:var(--white);border-radius:20px;width:100%;max-width:390px;padding:38px 32px;position:relative;transform:translateY(18px);transition:transform .22s;}
@@ -162,12 +192,27 @@ section{padding:68px 5%;}
 .btn-submit:hover{background:var(--warm);}
 .modal-fine{font-size:.68rem;color:rgba(107,100,89,.48);text-align:center;margin-top:12px;line-height:1.5;}
 
-.pmodal{max-width:740px;padding:0;display:flex;overflow:hidden;border-radius:20px;}
-.pmodal-imgs{width:300px;flex-shrink:0;background:#ede7da;position:relative;overflow:hidden;min-height:300px;}
-.pmodal-imgs .slider{height:100%;}
-.sold-ribbon{position:absolute;top:14px;left:0;background:#b02020;color:white;padding:4px 14px;font-size:.68rem;font-weight:700;letter-spacing:.1em;z-index:4;}
-.pmodal-body{flex:1;padding:36px 28px;overflow-y:auto;max-height:88vh;}
+/* ===== PRODUCT DETAIL MODAL ===== */
+.pmodal{max-width:820px;padding:0;display:flex;overflow:hidden;border-radius:20px;max-height:90vh;}
 
+/* Left image side */
+.pmodal-imgs{
+  width:380px;flex-shrink:0;
+  background:#ede7da;
+  position:relative;overflow:hidden;
+}
+.pmodal-imgs .slider-track{height:100%;}
+.pmodal-imgs .slide img{
+  width:100%;height:100%;
+  object-fit:contain; /* show full photo — no crop */
+  object-position:center center;
+  background:#ede7da;
+}
+
+.sold-ribbon{position:absolute;top:14px;left:0;background:#b02020;color:white;padding:4px 14px;font-size:.68rem;font-weight:700;letter-spacing:.1em;z-index:6;}
+.pmodal-body{flex:1;padding:36px 28px;overflow-y:auto;}
+
+/* ===== FOOTER ===== */
 footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201,168,76,.09);}
 .foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px;margin-bottom:30px;}
 .foot-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--gold);}
@@ -184,12 +229,13 @@ footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201
 .spin{width:30px;height:30px;border:2px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-@media(max-width:640px){
-  .pmodal{flex-direction:column;}
-  .pmodal-imgs{width:100%;height:220px;min-height:220px;}
+@media(max-width:700px){
+  .pmodal{flex-direction:column;max-height:95vh;}
+  .pmodal-imgs{width:100%;height:300px;}
   .pmodal-body{padding:20px 16px;}
   .modal{padding:30px 18px;}
   .form-row{grid-template-columns:1fr;}
+  .card-img-wrap{height:300px;}
 }
 </style>
 </head>
@@ -209,7 +255,7 @@ footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201
   <h1>Wear What<br><em>Feels Right</em></h1>
   <p class="hero-sub">Browse our suits. Like something? WhatsApp us — we give you the best real price.</p>
   <div class="hero-ctas">
-    <a href="#collection" class="btn-gold" onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'});return false;">See All Suits</a>
+    <button class="btn-gold" onclick="scrollToCollection()">See All Suits</button>
     <a href="https://wa.me/917982733450" target="_blank" class="btn-ghost">💬 WhatsApp Us</a>
   </div>
 </section>
@@ -238,7 +284,7 @@ footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201
 <section id="collection">
   <div class="sec-label">Our Collection</div>
   <h2 class="sec-title">All Suits</h2>
-  <p class="sec-sub">Swipe photos to see different poses & colours. MRP listed — WhatsApp us for real price.</p>
+  <p class="sec-sub">Tap a suit to see full photo. Swipe or use arrows to see more photos. MRP listed — WhatsApp us for real price.</p>
   <div id="productsGrid" class="grid"></div>
   <div id="loadingMsg" class="loading"><div class="spin"></div>Loading suits...</div>
   <div id="emptyMsg" style="display:none;text-align:center;padding:60px 20px;color:var(--mid);font-size:.88rem;">No suits yet. Check back soon! 🙂</div>
@@ -277,7 +323,7 @@ footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201
     </div>
     <div class="fg"><label>Description</label><textarea id="newDesc" placeholder="Fabric, style, occasion, sizes available..."></textarea></div>
     <div class="fg">
-      <label>Photos — up to 5 (different poses, angles)</label>
+      <label>Photos — up to 5 (tap to upload, different poses/angles)</label>
       <div class="imgs-upload" id="imgSlots"></div>
     </div>
     <div class="fg">
@@ -321,9 +367,10 @@ footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201
   </div>
 </div>
 
+<!-- PRODUCT DETAIL MODAL -->
 <div class="overlay" id="pModal" onclick="closeOut(event,'pModal')">
   <div class="modal pmodal">
-    <button class="modal-x" onclick="closeModal('pModal')" style="top:10px;right:12px;z-index:6;background:rgba(14,12,9,.5);color:white;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">✕</button>
+    <button class="modal-x" onclick="closeModal('pModal')" style="top:10px;right:12px;z-index:10;background:rgba(14,12,9,.6);color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:1rem;">✕</button>
     <div class="pmodal-imgs" id="pModalImgs"></div>
     <div class="pmodal-body" id="pModalBody"></div>
   </div>
@@ -338,19 +385,23 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const OWNER_PASS = 'no_exchange_not_give';
 
 const SB = {
-  async get(){ 
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*&order=created_at.desc`, {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+  async get(){
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*&order=created_at.desc`,
+      {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
     return r.json();
   },
   async insert(p){
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/products`, {method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(p)});
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/products`,
+      {method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(p)});
     return r.json();
   },
   async update(id,data){
-    await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`, {method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(data)});
+    await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`,
+      {method:'PATCH',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'},body:JSON.stringify(data)});
   },
   async delete(id){
-    await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`, {method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
+    await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`,
+      {method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}});
   }
 };
 
@@ -361,18 +412,85 @@ let loggedIn = JSON.parse(sessionStorage.getItem('menka_user')||'null');
 let newImgs = [null,null,null,null,null];
 let newColours = [];
 
+// ============ SCROLL FIX ============
+function scrollToCollection(){
+  const el = document.getElementById('collection');
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
 // ============ LOAD ============
 async function loadProducts(){
   document.getElementById('loadingMsg').style.display='block';
   document.getElementById('productsGrid').innerHTML='';
   document.getElementById('emptyMsg').style.display='none';
-  try {
+  try{
     products = await SB.get();
-    if(!Array.isArray(products)) products = [];
-  } catch(e){ products=[]; }
+    if(!Array.isArray(products)) products=[];
+  }catch(e){ products=[]; }
   document.getElementById('loadingMsg').style.display='none';
   renderGrid();
   if(isOwner) renderOwnerGrid();
+}
+
+// ============ SLIDER ENGINE ============
+// Each slider has: { idx, imgs, trackEl, dotsEl }
+const sliders = {};
+
+function initSlider(id, imgs, trackEl, wrapEl){
+  sliders[id] = { idx:0, imgs, trackEl, wrapEl };
+  updateSlider(id);
+}
+
+function updateSlider(id){
+  const s = sliders[id]; if(!s) return;
+  s.trackEl.style.transform = `translateX(-${s.idx * 100}%)`;
+  // update dots
+  const dots = s.wrapEl.querySelectorAll('.dot');
+  dots.forEach((d,i) => d.classList.toggle('active', i===s.idx));
+}
+
+function slideGo(id, dir, ev){
+  if(ev) ev.stopPropagation();
+  const s = sliders[id]; if(!s) return;
+  s.idx = Math.max(0, Math.min(s.imgs.length-1, s.idx+dir));
+  updateSlider(id);
+}
+
+function slideDot(id, idx, ev){
+  if(ev) ev.stopPropagation();
+  const s = sliders[id]; if(!s) return;
+  s.idx = idx;
+  updateSlider(id);
+}
+
+// Touch swipe support
+function addSwipe(wrapEl, id){
+  let startX = 0;
+  wrapEl.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
+  wrapEl.addEventListener('touchend', e=>{
+    const diff = startX - e.changedTouches[0].clientX;
+    if(Math.abs(diff) > 40) slideGo(id, diff>0 ? 1 : -1, null);
+  }, {passive:true});
+}
+
+// ============ BUILD SLIDER HTML ============
+function buildSliderHTML(id, imgs){
+  const slides = imgs.map(img =>
+    img
+    ? `<div class="slide"><img src="${img}" loading="lazy"/></div>`
+    : `<div class="slide"><div class="slide-ph"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 16M14 8h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Photo Coming</span></div></div>`
+  ).join('');
+
+  const dots = imgs.length > 1
+    ? `<div class="s-dots">${imgs.map((_,i)=>`<button class="dot${i===0?' active':''}" onclick="slideDot('${id}',${i},event)"></button>`).join('')}</div>`
+    : '';
+
+  const arrows = imgs.length > 1
+    ? `<button class="s-prev" onclick="slideGo('${id}',-1,event)">&#8249;</button>
+       <button class="s-next" onclick="slideGo('${id}',1,event)">&#8250;</button>`
+    : '';
+
+  return `<div class="slider-track" id="track_${id}">${slides}</div>${arrows}${dots}`;
 }
 
 // ============ RENDER GRID ============
@@ -381,17 +499,24 @@ function renderGrid(){
   const empty = document.getElementById('emptyMsg');
   if(!products.length){ grid.innerHTML=''; empty.style.display='block'; return; }
   empty.style.display='none';
+
   grid.innerHTML = products.map(p=>{
     const imgs = (p.imgs&&p.imgs.length) ? p.imgs : [null];
-    const slides = imgs.map(img=>img?`<div class="slide"><img src="${img}" loading="lazy"/></div>`:`<div class="slide"><div class="slide-ph"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 16M14 8h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>Photo Coming</span></div></div>`).join('');
-    const dots = imgs.length>1?`<div class="s-dots">${imgs.map((_,i)=>`<div class="dot${i===0?' active':''}" onclick="event.stopPropagation();sTo('s${p.id}',${i})"></div>`).join('')}</div>`:'';
-    const arrows = imgs.length>1?`<button class="s-prev" onclick="event.stopPropagation();sBy('s${p.id}',-1)">‹</button><button class="s-next" onclick="event.stopPropagation();sBy('s${p.id}',1)">›</button>`:'';
-    const colours = (p.colours&&p.colours.length)?`<div class="colour-row">${p.colours.map(c=>`<div class="cdot" style="background:${c.hex}" title="${c.name}"></div>`).join('')}</div>`:'';
+    const sid = 'c'+p.id;
+    const colours = (p.colours&&p.colours.length)
+      ? `<div class="colour-row">${p.colours.map(c=>`<div class="cdot" style="background:${c.hex}" title="${c.name}"></div>`).join('')}</div>`
+      : '';
+
     return `<div class="card${p.sold?' sold':''}" onclick="openProduct('${p.id}')">
-      <div class="card-img-wrap">
-        <div class="slider" id="s${p.id}" data-idx="0">${slides}</div>
-        ${arrows}${dots}
-        <div class="card-wa-h"><button class="wa-sm" onclick="event.stopPropagation();waP('${p.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>Ask Price on WhatsApp</button></div>
+      <div class="sold-overlay"><span>SOLD OUT</span></div>
+      <div class="card-img-wrap" id="wrap_${sid}">
+        ${buildSliderHTML(sid, imgs)}
+        <div class="card-wa-h">
+          <button class="wa-sm" onclick="event.stopPropagation();waP('${p.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+            Ask Price on WhatsApp
+          </button>
+        </div>
       </div>
       <div class="card-body">
         ${colours}
@@ -404,43 +529,86 @@ function renderGrid(){
       </div>
     </div>`;
   }).join('');
-}
 
-// ============ SLIDER ============
-function sTo(id,idx){
-  const el=document.getElementById(id); if(!el) return;
-  const n=el.children.length; idx=Math.max(0,Math.min(n-1,idx));
-  el.dataset.idx=idx; el.style.transform=`translateX(-${idx*100}%)`;
-  const w=el.closest('.card-img-wrap')||el.closest('.pmodal-imgs');
-  if(w) w.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  // Init sliders after DOM inserted
+  products.forEach(p=>{
+    const sid = 'c'+p.id;
+    const imgs = (p.imgs&&p.imgs.length) ? p.imgs : [null];
+    const trackEl = document.getElementById('track_'+sid);
+    const wrapEl = document.getElementById('wrap_'+sid);
+    if(trackEl && wrapEl){
+      initSlider(sid, imgs, trackEl, wrapEl);
+      addSwipe(wrapEl, sid);
+    }
+  });
 }
-function sBy(id,d){ const el=document.getElementById(id); if(el) sTo(id,Number(el.dataset.idx||0)+d); }
 
 // ============ PRODUCT DETAIL ============
 function openProduct(id){
-  const p=products.find(x=>x.id===id); if(!p) return;
-  const imgs=(p.imgs&&p.imgs.length)?p.imgs:[null];
-  const slides=imgs.map(img=>img?`<div class="slide" style="min-height:100%;"><img src="${img}" style="width:100%;height:100%;object-fit:cover;"/></div>`:`<div class="slide"><div class="slide-ph" style="min-height:300px;"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" width="44" height="44"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 16M14 8h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div></div>`).join('');
-  const dots=imgs.length>1?`<div class="s-dots">${imgs.map((_,i)=>`<div class="dot${i===0?' active':''}" onclick="sTo('pm${id}',${i})"></div>`).join('')}</div>`:'';
-  const arrows=imgs.length>1?`<button class="s-prev" style="opacity:.8;" onclick="sBy('pm${id}',-1)">‹</button><button class="s-next" style="opacity:.8;" onclick="sBy('pm${id}',1)">›</button>`:'';
-  document.getElementById('pModalImgs').innerHTML=`<div class="slider" id="pm${id}" data-idx="0" style="height:100%;">${slides}</div>${arrows}${dots}${p.sold?'<div class="sold-ribbon">SOLD OUT</div>':''}`;
-  const colours=(p.colours&&p.colours.length)?`<div style="margin-bottom:16px;"><div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:7px;">Available Colours</div><div style="display:flex;gap:8px;flex-wrap:wrap;">${p.colours.map(c=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:22px;height:22px;border-radius:50%;background:${c.hex};border:2px solid rgba(14,12,9,.1);"></div><span style="font-size:.58rem;color:var(--mid);">${c.name}</span></div>`).join('')}</div></div>`:'';
+  const p = products.find(x=>x.id===id); if(!p) return;
+  const imgs = (p.imgs&&p.imgs.length) ? p.imgs : [null];
+  const sid = 'pm'+p.id;
+
+  const slides = imgs.map(img =>
+    img
+    ? `<div class="slide"><img src="${img}" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#ede7da;" loading="lazy"/></div>`
+    : `<div class="slide"><div class="slide-ph" style="min-height:300px;"><svg fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" width="44" height="44"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 16M14 8h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div></div>`
+  ).join('');
+
+  const dots = imgs.length>1
+    ? `<div class="s-dots">${imgs.map((_,i)=>`<button class="dot${i===0?' active':''}" onclick="slideDot('${sid}',${i},event)"></button>`).join('')}</div>`
+    : '';
+  const arrows = imgs.length>1
+    ? `<button class="s-prev" style="opacity:.85;" onclick="slideGo('${sid}',-1,event)">&#8249;</button>
+       <button class="s-next" style="opacity:.85;" onclick="slideGo('${sid}',1,event)">&#8250;</button>`
+    : '';
+
+  document.getElementById('pModalImgs').innerHTML =
+    `<div class="slider-track" id="track_${sid}" style="height:100%;">${slides}</div>
+     ${arrows}${dots}
+     ${p.sold?'<div class="sold-ribbon">SOLD OUT</div>':''}`;
+
+  // init modal slider
+  const trackEl = document.getElementById('track_'+sid);
+  const wrapEl  = document.getElementById('pModalImgs');
+  initSlider(sid, imgs, trackEl, wrapEl);
+  addSwipe(wrapEl, sid);
+
+  const colours = (p.colours&&p.colours.length)
+    ? `<div style="margin-bottom:16px;">
+        <div style="font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:7px;">Available Colours</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          ${p.colours.map(c=>`<div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:${c.hex};border:2px solid rgba(14,12,9,.1);"></div>
+            <span style="font-size:.58rem;color:var(--mid);">${c.name}</span>
+          </div>`).join('')}
+        </div>
+      </div>` : '';
+
   document.getElementById('pModalBody').innerHTML=`
     <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;color:var(--dark);margin-bottom:7px;">${p.name}</h2>
     <p style="font-size:.83rem;color:var(--mid);line-height:1.75;margin-bottom:16px;">${p.description}</p>
     ${colours}
     <div style="background:var(--cream2);border-radius:10px;padding:12px 15px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
-      <div><div style="font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">MRP Price</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--dark);">₹${Number(p.mrp).toLocaleString('en-IN')}</div></div>
+      <div>
+        <div style="font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);">MRP Price</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--dark);">₹${Number(p.mrp).toLocaleString('en-IN')}</div>
+      </div>
       <div style="font-size:.7rem;color:#1a9a4a;font-weight:600;">💬 Real price on WhatsApp</div>
     </div>
     ${p.sold
-      ?`<div style="background:rgba(180,40,40,.08);border:1px solid rgba(180,40,40,.18);border-radius:10px;padding:13px;text-align:center;color:#b02020;font-weight:600;font-size:.87rem;">This suit has been sold</div>`
-      :`<a href="https://wa.me/917982733450?text=Hi%2C+I%27m+interested+in+%22${encodeURIComponent(p.name)}%22+(MRP+%E2%82%B9${p.mrp})+from+Menka+Creation.+Please+share+the+real+price!" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:7px;background:#25D366;color:white;padding:12px;border-radius:10px;font-size:.84rem;font-weight:600;text-decoration:none;margin-bottom:10px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
-        Ask Real Price on WhatsApp
-      </a>
-      <button onclick="handleInterest('${p.id}')" style="width:100%;background:transparent;border:1.5px solid rgba(14,12,9,.12);border-radius:10px;padding:11px;font-size:.8rem;font-weight:500;cursor:pointer;color:var(--dark);">💡 I'm Interested — Sign Up to Buy</button>`
+      ? `<div style="background:rgba(180,40,40,.08);border:1px solid rgba(180,40,40,.18);border-radius:10px;padding:13px;text-align:center;color:#b02020;font-weight:600;font-size:.87rem;">This suit has been sold</div>`
+      : `<a href="https://wa.me/917982733450?text=Hi%2C+I%27m+interested+in+%22${encodeURIComponent(p.name)}%22+(MRP+%E2%82%B9${p.mrp})+from+Menka+Creation.+Please+share+the+real+price!" target="_blank"
+           style="display:flex;align-items:center;justify-content:center;gap:7px;background:#25D366;color:white;padding:12px;border-radius:10px;font-size:.84rem;font-weight:600;text-decoration:none;margin-bottom:10px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+          Ask Real Price on WhatsApp
+        </a>
+        <button onclick="handleInterest('${p.id}')"
+          style="width:100%;background:transparent;border:1.5px solid rgba(14,12,9,.12);border-radius:10px;padding:11px;font-size:.8rem;font-weight:500;cursor:pointer;color:var(--dark);">
+          💡 I'm Interested — Sign Up to Buy
+        </button>`
     }`;
+
   openModal('pModal');
 }
 
@@ -453,7 +621,7 @@ function waP(id){
 function handleInterest(id){
   if(!loggedIn){closeModal('pModal');setTimeout(()=>openModal('loginModal'),180);showToast('Please sign in first 👤');return;}
   const p=products.find(x=>x.id===id);
-  showToast(`✅ Interest registered in "${p.name}"! We'll contact you.`);
+  showToast(`✅ Registered interest in "${p.name}"! We'll contact you.`);
   closeModal('pModal');
 }
 
@@ -500,20 +668,20 @@ function renderImgSlots(){
 
 function upImg(input,i){
   const file=input.files[0];if(!file)return;
-  // Compress image before saving
   const reader=new FileReader();
   reader.onload=e=>{
     const img=new Image();
     img.onload=()=>{
       const canvas=document.createElement('canvas');
-      const MAX=800;
+      const MAX=900;
       let w=img.width,h=img.height;
-      if(w>MAX){h=h*(MAX/w);w=MAX;}
-      if(h>MAX){w=w*(MAX/h);h=MAX;}
+      if(w>MAX){h=Math.round(h*(MAX/w));w=MAX;}
+      if(h>MAX){w=Math.round(w*(MAX/h));h=MAX;}
       canvas.width=w;canvas.height=h;
       canvas.getContext('2d').drawImage(img,0,0,w,h);
-      newImgs[i]=canvas.toDataURL('image/jpeg',0.75);
+      newImgs[i]=canvas.toDataURL('image/jpeg',0.82);
       renderImgSlots();
+      showToast(`Photo ${i+1} uploaded ✅`);
     };
     img.src=e.target.result;
   };
@@ -522,7 +690,10 @@ function upImg(input,i){
 function rmImg(i){newImgs[i]=null;renderImgSlots();}
 
 function renderColourChips(){
-  document.getElementById('colourChips').innerHTML=newColours.map((c,i)=>`<div class="colour-chip" style="background:${c.hex}" title="${c.name}"><button class="rmc" onclick="rmColour(${i})">✕</button></div>`).join('');
+  document.getElementById('colourChips').innerHTML=newColours.map((c,i)=>
+    `<div class="colour-chip" style="background:${c.hex}" title="${c.name}">
+      <button class="rmc" onclick="rmColour(${i})">✕</button>
+    </div>`).join('');
 }
 function addColour(){
   const hex=document.getElementById('colourPicker').value;
@@ -560,11 +731,15 @@ function renderOwnerGrid(){
   if(!products.length){grid.innerHTML='<p style="color:rgba(245,240,232,.3);font-size:.83rem;margin-top:10px;">No products yet. Add one above.</p>';return;}
   grid.innerHTML=products.map(p=>`
     <div class="o-card">
-      <div class="o-card-img">${(p.imgs&&p.imgs[0])?`<img src="${p.imgs[0]}" loading="lazy"/>`:`<div class="no-img">No Photo</div>`}</div>
+      <div class="o-card-img">
+        ${(p.imgs&&p.imgs[0])?`<img src="${p.imgs[0]}" loading="lazy"/>`:`<div class="no-img">No Photo</div>`}
+      </div>
       <div class="o-card-body">
         <div class="o-card-name">${p.name} — ₹${Number(p.mrp).toLocaleString('en-IN')} ${p.sold?'<span style="color:#b02020;font-size:.65rem;">[SOLD]</span>':''}</div>
         <div class="o-actions">
-          ${p.sold?`<button class="btn-unsold-o" onclick="toggleSold('${p.id}')">✅ Available</button>`:`<button class="btn-sold-o" onclick="toggleSold('${p.id}')">❌ Sold Out</button>`}
+          ${p.sold
+            ?`<button class="btn-unsold-o" onclick="toggleSold('${p.id}')">✅ Mark Available</button>`
+            :`<button class="btn-sold-o" onclick="toggleSold('${p.id}')">❌ Mark Sold Out</button>`}
           <button class="btn-del-o" onclick="delProduct('${p.id}')">🗑 Delete</button>
         </div>
       </div>
@@ -578,6 +753,7 @@ async function toggleSold(id){
   renderGrid();renderOwnerGrid();
   showToast(p.sold?`"${p.name}" marked sold out`:`"${p.name}" marked available`);
 }
+
 async function delProduct(id){
   if(!confirm('Delete this product? Cannot undo.'))return;
   await SB.delete(id);
