@@ -255,7 +255,7 @@ footer{background:var(--dark);padding:40px 5% 24px;border-top:1px solid rgba(201
   <h1>Wear What<br><em>Feels Right</em></h1>
   <p class="hero-sub">Browse our suits. Like something? WhatsApp us — we give you the best real price.</p>
   <div class="hero-ctas">
-    <button class="btn-gold" onclick="scrollToCollection()">See All Suits</button>
+    <a href="#collection" class="btn-gold" onclick="setTimeout(function(){document.getElementById('collection').scrollIntoView({behavior:'smooth'});},50);return true;">See All Suits ↓</a>
     <a href="https://wa.me/917982733450" target="_blank" class="btn-ghost">💬 WhatsApp Us</a>
   </div>
 </section>
